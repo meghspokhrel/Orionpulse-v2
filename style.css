@@ -461,3 +461,136 @@ h1 span {
         grid-column: auto;
     }
 }
+/* How We Work */
+
+.process-section {
+    padding: 140px 30px;
+    background: #091525;
+}
+
+.process-heading {
+    max-width: 1200px;
+    margin: 0 auto 80px;
+
+    display: grid;
+    grid-template-columns: 1fr 0.7fr;
+    gap: 80px;
+    align-items: end;
+}
+
+.process-heading h2 {
+    margin-top: 15px;
+
+    font-size: clamp(3rem, 6vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -4px;
+}
+
+.process-heading h2 span {
+    display: block;
+    opacity: 0.4;
+}
+
+.process-heading > p {
+    max-width: 500px;
+
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.05rem;
+}
+
+.process-list {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.process-step {
+    padding: 38px 0;
+
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    gap: 40px;
+    align-items: center;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+    transition: padding 0.25s ease;
+}
+
+.process-step:last-child {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.process-step:hover {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.process-number {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    opacity: 0.4;
+}
+
+.process-content h3 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.process-content p {
+    max-width: 650px;
+
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.process-tag {
+    padding: 8px 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 100px;
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    opacity: 0.65;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .process-section {
+        padding: 90px 20px;
+    }
+
+    .process-heading {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 55px;
+    }
+
+    .process-heading h2 {
+        letter-spacing: -2px;
+    }
+
+    .process-step {
+        grid-template-columns: 45px 1fr;
+        gap: 20px;
+        padding: 30px 0;
+    }
+
+    .process-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .process-tag {
+        display: none;
+    }
+
+    .process-step:hover {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
