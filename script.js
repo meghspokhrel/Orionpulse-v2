@@ -248,3 +248,19 @@ magneticButtons.forEach(button => {
     });
 
 });
+/* =========================================
+   GROWTH ENGINE DATA FLOW
+========================================= */
+
+const engineNodes =
+    document.querySelectorAll(".engine-node");
+
+
+engineNodes.forEach((node, index) => {
+
+    node.style.animationDelay =
+        `${index * 0.35}s`;
+
+    node.classList.add("engine-node-active");
+
+});
