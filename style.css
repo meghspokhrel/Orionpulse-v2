@@ -2594,3 +2594,37 @@ h3 {
     }
 
 }
+/* =========================================
+   NODE ACTIVITY
+========================================= */
+
+.engine-node-active {
+
+    animation:
+        nodeBreath 4s
+        ease-in-out
+        infinite;
+
+}
+
+
+@keyframes nodeBreath {
+
+    0%,
+    100% {
+
+        box-shadow:
+            0 12px 35px
+            rgba(0,0,0,0.18);
+
+    }
+
+    50% {
+
+        box-shadow:
+            0 0 25px
+            rgba(124,92,255,0.10);
+
+    }
+
+}
