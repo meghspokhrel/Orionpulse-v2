@@ -1,237 +1,89 @@
-// Interactive ROI Calculator
-
-const revenueSlider = document.getElementById("monthly-revenue");
-const budgetSlider = document.getElementById("marketing-budget");
-
-const revenueDisplay = document.getElementById("revenue-display");
-const budgetDisplay = document.getElementById("budget-display");
-
-const additionalRevenueDisplay =
-    document.getElementById("additional-revenue");
-
-const roasDisplay =
-    document.getElementById("roas-result");
-
-const annualImpactDisplay =
-    document.getElementById("annual-impact");
+/* =========================================
+   ORIONPULSE
+   JAVASCRIPT
+========================================= */
 
 
-function formatINR(value) {
-    return new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: "INR",
-        maximumFractionDigits: 0
-    }).format(value);
-}
+/* =========================================
+   HEADER SCROLL EFFECT
+========================================= */
+
+const header = document.querySelector(".site-header");
 
 
-function formatCrore(value) {
-    if (value >= 10000000) {
-        return `₹${(value / 10000000).toFixed(2)}Cr`;
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 30) {
+
+        header.classList.add("scrolled");
+
+    } else {
+
+        header.classList.remove("scrolled");
+
     }
 
-    if (value >= 100000) {
-        return `₹${(value / 100000).toFixed(2)}L`;
-    }
-
-    return formatINR(value);
-}
+});
 
 
-function calculateROI() {
+/* =========================================
+   GROWTH ENGINE PULSE
+========================================= */
 
-    const monthlyRevenue =
-        Number(revenueSlider.value);
-
-    const marketingBudget =
-        Number(budgetSlider.value);
+const core = document.querySelector(".growth-core");
 
 
-    /*
-     * Illustrative model:
-     * We estimate incremental revenue as a percentage
-     * of the combined revenue and marketing investment.
-     *
-     * This is NOT a promise or guaranteed business result.
-     */
+setInterval(() => {
 
-    const estimatedROAS =
-        Math.max(
-            2,
-            Math.min(
-                6,
-                2.5 +
-                (monthlyRevenue / marketingBudget) * 0.35
-            )
-        );
+    core.classList.toggle("pulse-active");
+
+}, 1800);
 
 
-    const estimatedAdditionalRevenue =
-        marketingBudget * estimatedROAS;
+/* =========================================
+   SIMPLE REVEAL SYSTEM
+========================================= */
+
+const revealElements = document.querySelectorAll(
+    ".growth-card, .service-card, .section-heading, .intro-container, .future-container, .cta-container"
+);
 
 
-    const estimatedAnnualImpact =
-        estimatedAdditionalRevenue * 12;
+const observer = new IntersectionObserver(
 
+    entries => {
 
-    revenueDisplay.textContent =
-        formatINR(monthlyRevenue);
+        entries.forEach(entry => {
 
-    budgetDisplay.textContent =
-        formatINR(marketingBudget);
+            if (entry.isIntersecting) {
 
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
 
-    additionalRevenueDisplay.textContent =
-        formatINR(estimatedAdditionalRevenue);
-
-
-    roasDisplay.textContent =
-        `${estimatedROAS.toFixed(1)}x`;
-
-
-    annualImpactDisplay.textContent =
-        formatCrore(estimatedAnnualImpact);
-}
-
-
-if (revenueSlider && budgetSlider) {
-
-    revenueSlider.addEventListener(
-        "input",
-        calculateROI
-    );
-
-    budgetSlider.addEventListener(
-        "input",
-        calculateROI
-    );
-
-    calculateROI();
-}
-// OrionPulse Proposal Form
-
-const proposalForm = document.getElementById("proposal-form");
-
-const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbxFAYxwkTwbZF_MNMkkMRsJZHcxBrWrga9ZZJBTeZ6XEA2PLlZGUWJprIeT7tAVPmoirw/exec";
-
-
-if (proposalForm) {
-
-    proposalForm.addEventListener("submit", async function (event) {
-
-        event.preventDefault();
-
-        const submitButton =
-            proposalForm.querySelector("button[type='submit']");
-
-        const originalText = submitButton.textContent;
-
-        submitButton.disabled = true;
-        submitButton.textContent = "Sending...";
-
-        const formData = new FormData(proposalForm);
-
-        const data = {};
-
-        formData.forEach((value, key) => {
-
-            if (key === "services") {
-
-                if (!data.services) {
-                    data.services = [];
-                }
-
-                data.services.push(value);
-
-            } else {
-
-                data[key] = value;
+                observer.unobserve(entry.target);
 
             }
 
         });
 
-        if (Array.isArray(data.services)) {
-            data.services = data.services.join(", ");
-        }
+    },
 
-
-        try {
-
-            await fetch(GOOGLE_SCRIPT_URL, {
-
-                method: "POST",
-
-                mode: "no-cors",
-
-                headers: {
-                    "Content-Type": "text/plain;charset=utf-8"
-                },
-
-                body: JSON.stringify(data)
-
-            });
-
-            
-            submitButton.textContent = "Proposal Request Sent ✓";
-
-proposalForm.reset();
-
-const successMessage =
-    document.getElementById("proposal-success");
-
-if (successMessage) {
-    proposalForm.style.display = "none";
-    successMessage.style.display = "block";
-
-    successMessage.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
-}
-
-            setTimeout(function () {
-
-                submitButton.disabled = false;
-                submitButton.textContent = originalText;
-
-            }, 5000);
-
-
-        } catch (error) {
-
-            console.error("Proposal form error:", error);
-
-            submitButton.disabled = false;
-            submitButton.textContent = "Try Again";
-
-        }
-
-    });
-
-}
-function resetProposalForm() {
-
-    const proposalForm =
-        document.getElementById("proposal-form");
-
-    const successMessage =
-        document.getElementById("proposal-success");
-
-    if (proposalForm) {
-        proposalForm.style.display = "block";
-        proposalForm.reset();
+    {
+        threshold: 0.12
     }
 
-    if (successMessage) {
-        successMessage.style.display = "none";
-    }
+);
 
-    if (proposalForm) {
-        proposalForm.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-    }
-}
+
+revealElements.forEach(element => {
+
+    element.style.opacity = "0";
+
+    element.style.transform = "translateY(25px)";
+
+    element.style.transition =
+        "opacity 0.7s ease, transform 0.7s ease";
+
+    observer.observe(element);
+
+});
