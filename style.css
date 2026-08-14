@@ -1209,3 +1209,245 @@ h1 span {
         flex-direction: column;
     }
 }
+/* Proposal Form */
+
+.proposal-section {
+    padding: 150px 30px;
+    background: #091525;
+}
+
+.proposal-header {
+    max-width: 1200px;
+    margin: 0 auto 70px;
+}
+
+.proposal-header h2 {
+    max-width: 800px;
+    margin-top: 15px;
+
+    font-size: clamp(3rem, 6vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -4px;
+}
+
+.proposal-header h2 span {
+    display: block;
+    opacity: 0.4;
+}
+
+.proposal-header > p:last-child {
+    max-width: 650px;
+    margin-top: 28px;
+
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+
+/* Form container */
+
+.proposal-form {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    padding: 45px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px 25px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-field label {
+    margin-bottom: 10px;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+
+    color: rgba(255, 255, 255, 0.75);
+}
+
+
+/* Inputs */
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    width: 100%;
+
+    padding: 16px 17px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 0.95rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.055);
+}
+
+.form-field textarea {
+    resize: vertical;
+    min-height: 170px;
+}
+
+.form-field select {
+    cursor: pointer;
+}
+
+
+/* Service options */
+
+.service-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.service-option {
+    position: relative;
+
+    cursor: pointer;
+}
+
+.service-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.service-option span {
+    display: block;
+
+    padding: 14px 16px;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    color: rgba(255, 255, 255, 0.55);
+
+    font-size: 0.85rem;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.service-option:hover span {
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.service-option input:checked + span {
+    border-color: rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+}
+
+
+/* Submit */
+
+.form-submit {
+    margin-top: 40px;
+    padding-top: 35px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.form-submit button {
+    border: none;
+    cursor: pointer;
+}
+
+.form-submit p {
+    max-width: 450px;
+
+    color: rgba(255, 255, 255, 0.35);
+
+    font-size: 0.75rem;
+    line-height: 1.5;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .proposal-section {
+        padding: 90px 20px;
+    }
+
+    .proposal-header h2 {
+        letter-spacing: -2px;
+    }
+
+    .proposal-form {
+        padding: 25px;
+        border-radius: 18px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .service-options {
+        grid-template-columns: 1fr;
+    }
+
+    .form-submit {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-submit button {
+        width: 100%;
+    }
+}
