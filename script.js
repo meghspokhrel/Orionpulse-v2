@@ -108,3 +108,94 @@ if (revenueSlider && budgetSlider) {
 
     calculateROI();
 }
+// OrionPulse Proposal Form
+
+const proposalForm = document.getElementById("proposal-form");
+
+const GOOGLE_SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbxFAYxwkTwbZF_MNMkkMRsJZHcxBrWrga9ZZJBTeZ6XEA2PLlZGUWJprIeT7tAVPmoirw/exec";
+
+
+if (proposalForm) {
+
+    proposalForm.addEventListener("submit", async function (event) {
+
+        event.preventDefault();
+
+        const submitButton =
+            proposalForm.querySelector("button[type='submit']");
+
+        const originalText = submitButton.textContent;
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Sending...";
+
+        const formData = new FormData(proposalForm);
+
+        const data = {};
+
+        formData.forEach((value, key) => {
+
+            if (key === "services") {
+
+                if (!data.services) {
+                    data.services = [];
+                }
+
+                data.services.push(value);
+
+            } else {
+
+                data[key] = value;
+
+            }
+
+        });
+
+        if (Array.isArray(data.services)) {
+            data.services = data.services.join(", ");
+        }
+
+
+        try {
+
+            await fetch(GOOGLE_SCRIPT_URL, {
+
+                method: "POST",
+
+                mode: "no-cors",
+
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
+
+                body: JSON.stringify(data)
+
+            });
+
+
+            submitButton.textContent = "Proposal Request Sent ✓";
+
+            proposalForm.reset();
+
+
+            setTimeout(function () {
+
+                submitButton.disabled = false;
+                submitButton.textContent = originalText;
+
+            }, 5000);
+
+
+        } catch (error) {
+
+            console.error("Proposal form error:", error);
+
+            submitButton.disabled = false;
+            submitButton.textContent = "Try Again";
+
+        }
+
+    });
+
+}
