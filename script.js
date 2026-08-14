@@ -173,11 +173,23 @@ if (proposalForm) {
 
             });
 
-
+            
             submitButton.textContent = "Proposal Request Sent ✓";
 
-            proposalForm.reset();
+proposalForm.reset();
 
+const successMessage =
+    document.getElementById("proposal-success");
+
+if (successMessage) {
+    proposalForm.style.display = "none";
+    successMessage.style.display = "block";
+
+    successMessage.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
 
             setTimeout(function () {
 
