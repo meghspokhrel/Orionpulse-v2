@@ -211,3 +211,27 @@ if (successMessage) {
     });
 
 }
+function resetProposalForm() {
+
+    const proposalForm =
+        document.getElementById("proposal-form");
+
+    const successMessage =
+        document.getElementById("proposal-success");
+
+    if (proposalForm) {
+        proposalForm.style.display = "block";
+        proposalForm.reset();
+    }
+
+    if (successMessage) {
+        successMessage.style.display = "none";
+    }
+
+    if (proposalForm) {
+        proposalForm.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+}
