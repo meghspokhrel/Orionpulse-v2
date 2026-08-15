@@ -1,266 +1,166 @@
 /* =========================================
    ORIONPULSE
-   PHASE 5 — HERO + NAVIGATION
+   CLEAN JAVASCRIPT FOUNDATION
 ========================================= */
 
+document.addEventListener("DOMContentLoaded", () => {
 
-/* =========================================
-   HEADER
-========================================= */
+    /* =====================================
+       GROWTH SCANNER FORM
+    ====================================== */
 
-const header = document.querySelector(".site-header");
+    const form =
+        document.getElementById("growthScannerForm");
 
-window.addEventListener("scroll", () => {
-
-    if (window.scrollY > 40) {
-        header.classList.add("scrolled");
-    } else {
-        header.classList.remove("scrolled");
-    }
-
-});
+    const status =
+        document.getElementById("formStatus");
 
 
-/* =========================================
-   MOBILE NAVIGATION
-========================================= */
+    /*
+       IMPORTANT:
+       Replace this URL with the CURRENT
+       Google Apps Script deployment URL.
+    */
 
-const mobileButton =
-    document.querySelector(".mobile-menu-button");
-
-const navigation =
-    document.querySelector(".main-nav");
-
-if (mobileButton && navigation) {
-
-    mobileButton.addEventListener("click", () => {
-
-        navigation.classList.toggle("mobile-open");
-
-        mobileButton.classList.toggle("active");
-
-    });
+    const SCRIPT_URL =
+        "PASTE_YOUR_APPS_SCRIPT_URL_HERE";
 
 
-    navigation.querySelectorAll("a").forEach(link => {
+    if (form) {
 
-        link.addEventListener("click", () => {
+        form.addEventListener("submit", async (event) => {
 
-            navigation.classList.remove("mobile-open");
-
-            mobileButton.classList.remove("active");
-
-        });
-
-    });
-
-}
+            event.preventDefault();
 
 
-/* =========================================
-   GROWTH ENGINE
-========================================= */
+            if (status) {
 
-const growthVisual =
-    document.querySelector(".growth-visual");
+                status.textContent =
+                    "Preparing your growth assessment...";
 
-const growthCore =
-    document.querySelector(".growth-core");
-
-const nodes =
-    document.querySelectorAll(".engine-node");
+            }
 
 
-/* Core pulse */
-
-if (growthCore) {
-
-    setInterval(() => {
-
-        growthCore.classList.toggle("pulse-active");
-
-    }, 1800);
-
-}
+            const submitButton =
+                form.querySelector(
+                    'button[type="submit"]'
+                );
 
 
-/* =========================================
-   NODE INTERACTION
-========================================= */
+            if (submitButton) {
 
-nodes.forEach(node => {
+                submitButton.disabled = true;
 
-    node.addEventListener("mouseenter", () => {
+                submitButton.innerHTML =
+                    "Sending... <span>→</span>";
 
-        nodes.forEach(otherNode => {
+            }
 
-            if (otherNode !== node) {
 
-                otherNode.style.opacity = "0.35";
+            const formData =
+                new FormData(form);
+
+
+            try {
+
+                await fetch(
+                    SCRIPT_URL,
+                    {
+                        method: "POST",
+                        mode: "no-cors",
+                        body: formData
+                    }
+                );
+
+
+                if (status) {
+
+                    status.textContent =
+                        "Thank you. Your growth assessment has been received.";
+
+                }
+
+
+                form.reset();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Growth Scanner error:",
+                    error
+                );
+
+
+                if (status) {
+
+                    status.textContent =
+                        "Something went wrong. Please try again.";
+
+                }
+
+            }
+
+
+            if (submitButton) {
+
+                submitButton.disabled = false;
+
+                submitButton.innerHTML =
+                    "Build My Growth Plan <span>→</span>";
 
             }
 
         });
 
-        if (growthCore) {
-
-            growthCore.style.transform =
-                "translate(-50%, -50%) scale(1.05)";
-
-        }
-
-    });
+    }
 
 
-    node.addEventListener("mouseleave", () => {
+    /* =====================================
+       SMOOTH ANCHOR NAVIGATION
+    ====================================== */
 
-        nodes.forEach(otherNode => {
-
-            otherNode.style.opacity = "1";
-
-        });
-
-        if (growthCore) {
-
-            growthCore.style.transform =
-                "translate(-50%, -50%) scale(1)";
-
-        }
-
-    });
-
-});
-
-
-/* =========================================
-   HERO PARALLAX
-========================================= */
-
-if (growthVisual) {
-
-    window.addEventListener("mousemove", event => {
-
-        if (window.innerWidth < 900) return;
-
-        const x =
-            (event.clientX / window.innerWidth - 0.5);
-
-        const y =
-            (event.clientY / window.innerHeight - 0.5);
-
-
-        growthVisual.style.transform =
-            `translate(${x * 12}px, ${y * 12}px)`;
-
-    });
-
-}
-
-
-/* =========================================
-   SCROLL REVEAL
-========================================= */
-
-const revealElements =
     document.querySelectorAll(
-        ".growth-card, .service-card, .section-heading, .intro-container, .future-container, .cta-container"
-    );
+        'a[href^="#"]'
+    ).forEach((link) => {
+
+        link.addEventListener(
+            "click",
+            (event) => {
+
+                const targetId =
+                    link.getAttribute("href");
+
+                if (
+                    !targetId ||
+                    targetId === "#"
+                ) {
+                    return;
+                }
 
 
-const observer =
-    new IntersectionObserver(
-
-        entries => {
-
-            entries.forEach(entry => {
-
-                if (!entry.isIntersecting) return;
+                const target =
+                    document.querySelector(
+                        targetId
+                    );
 
 
-                entry.target.classList.add(
-                    "reveal-visible"
-                );
+                if (!target) {
+                    return;
+                }
 
 
-                observer.unobserve(
-                    entry.target
-                );
-
-            });
-
-        },
-
-        {
-            threshold: 0.12
-        }
-
-    );
+                event.preventDefault();
 
 
-revealElements.forEach(element => {
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
 
-    element.classList.add("reveal");
-
-    observer.observe(element);
-
-});
-
-
-/* =========================================
-   BUTTON MAGNETIC EFFECT
-========================================= */
-
-const magneticButtons =
-    document.querySelectorAll(
-        ".btn-primary"
-    );
-
-
-magneticButtons.forEach(button => {
-
-    button.addEventListener("mousemove", event => {
-
-        if (window.innerWidth < 900) return;
-
-
-        const rect =
-            button.getBoundingClientRect();
-
-
-        const x =
-            event.clientX - rect.left - rect.width / 2;
-
-        const y =
-            event.clientY - rect.top - rect.height / 2;
-
-
-        button.style.transform =
-            `translate(${x * 0.08}px, ${y * 0.08}px)`;
+            }
+        );
 
     });
-
-
-    button.addEventListener("mouseleave", () => {
-
-        button.style.transform =
-            "translate(0, 0)";
-
-    });
-
-});
-/* =========================================
-   GROWTH ENGINE DATA FLOW
-========================================= */
-
-const engineNodes =
-    document.querySelectorAll(".engine-node");
-
-
-engineNodes.forEach((node, index) => {
-
-    node.style.animationDelay =
-        `${index * 0.35}s`;
-
-    node.classList.add("engine-node-active");
 
 });
